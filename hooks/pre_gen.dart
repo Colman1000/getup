@@ -7,6 +7,7 @@ Future<void> run(HookContext context) async {
   if (name == null) {
     throw Exception('Invalid name : ${name}');
   }
+
   await Process.run(
     'flutter',
     [

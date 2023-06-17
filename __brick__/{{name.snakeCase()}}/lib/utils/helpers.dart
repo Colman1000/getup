@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:{{name.snakeCase()}}/config/keys.dart';
 
 class Helpers {
   static final context = (Get.context ?? Get.overlayContext)!;

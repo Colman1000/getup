@@ -11,6 +11,6 @@ class IntroView extends GetView<IntroController> {
 
   @override
   Widget build(BuildContext context) {
-    return const Container( color: Colors.blue);
+    return Container( color: Colors.blue);
   }
 }

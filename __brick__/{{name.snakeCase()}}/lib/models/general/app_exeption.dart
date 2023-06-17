@@ -51,7 +51,7 @@ class AppException implements Exception {
 
     return AppException(msg);
   }
-
+  {{/firebase_auth}}
   factory AppException.fromPlatformException(PlatformException e) {
     String msg = defaultMessage;
 
@@ -75,7 +75,6 @@ class AppException implements Exception {
 
     return AppException(msg);
   }
-  {{/firebase_auth}}
   final String message;
 
   @override

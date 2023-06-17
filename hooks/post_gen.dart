@@ -7,39 +7,57 @@ Future<void> run(HookContext context) async {
   await installDependencies(context);
   await updatePubspec(context);
 
-  context.logger.success('Successfully created {{name.snakeCase()}}!');
+  final name = context.vars['name']?.toString().snakeCase;
+  if (name == null) {
+    throw Exception('Invalid name : ${name}');
+  }
+
+  context.logger.success('Successfully created ${name}!');
   context.logger.info('Run the following commands to get started: ');
-  context.logger.info('  cd {{name.snakeCase()}}');
-  context.logger.info('  flutter run');
+  context.logger.info('  cd ${name}');
+  context.logger.info('  flutter run \n\n');
+
+  final firebase = context.vars['firebase'] ?? false;
+
+  if (firebase) {
+    context.logger.warn(
+      'Run `flutterfire configure` to complete firebase setup',
+    );
+  }
 }
 
 Future<void> cleanupFiles(HookContext context) async {
   final progress = context.logger.progress('Cleaning up directory ...');
-  await Directory('./{{name.snakeCase()}}/')
-      .list(recursive: true)
-      .where((element) => element.toString().contains('.gitkeep'))
-      .listen((file) {
-    file.delete();
-  });
+  final name = context.vars['name']?.toString().snakeCase;
+  if (name == null) {
+    throw Exception('Invalid name : ${name}');
+  }
+  final files = await Directory(name)
+      .listSync(recursive: true)
+      .where((element) => element.toString().contains('.gitkeep'));
+
+  files.forEach((f) => f.delete(recursive: false));
   progress.complete('Removed .gitkeep files');
 }
 
 installDependencies(HookContext context) async {
   final progress = context.logger.progress('Installing dependencies ...');
+  final name = context.vars['name']?.toString().snakeCase;
+  if (name == null) {
+    throw Exception('Invalid name : ${name}');
+  }
+
+  final packages = 'get '
+      '${context.vars['get_storage'] == true ? 'get_storage' : ''} '
+      '${context.vars['firebase'] == true ? 'firebase_core' : ''} '
+      '${context.vars['firebase_analytics'] == true ? 'firebase_analytics' : ''} '
+      '${context.vars['firebase_crashlytics'] == true ? 'firebase_crashlytics' : ''} '
+      '${context.vars['firebase_auth'] == true ? 'firebase_auth' : ''} ';
 
   await Process.run(
     'flutter',
-    [
-      'pub',
-      'add',
-      'get '
-          '${context.vars['get_storage'] == true ? 'get_storage' : ''} '
-          '${context.vars['firebase'] == true ? 'firebase_core' : ''} '
-          '${context.vars['firebase_analytics'] == true ? 'firebase_analytics' : ''} '
-          '${context.vars['firebase_crashlytics'] == true ? 'firebase_crashlytics' : ''} '
-          '${context.vars['firebase_auth'] == true ? 'firebase_auth' : ''} '
-    ],
-    workingDirectory: './{{name.snakeCase()}}',
+    ['pub', 'add', packages.trim()],
+    workingDirectory: name,
     runInShell: true,
   );
   progress.complete('Installed dependencies');
@@ -47,17 +65,13 @@ installDependencies(HookContext context) async {
 
 updatePubspec(HookContext context) async {
   final progress = context.logger.progress('Updating pubspec ...');
-  var pubspec = await File('./{{name.snakeCase()}}/pubspec.yaml');
+  final name = context.vars['name']?.toString().snakeCase;
+  if (name == null) {
+    throw Exception('Invalid name : ${name}');
+  }
+  var pubspec = await File('${name}/pubspec.yaml');
   var sink = pubspec.openWrite(mode: FileMode.append);
   sink.write('  assets:\n    - assets/icons/\n    - assets/images/\n');
   await sink.close();
   progress.complete('Updated pubspec');
-
-  final firebase = context.vars['firebase'] ?? false;
-
-  if (firebase) {
-    context.logger.info(
-      'Run `flutterfire configure` to complete firebase setup',
-    );
-  }
 }
