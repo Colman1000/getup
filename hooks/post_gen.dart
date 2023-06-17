@@ -4,8 +4,8 @@ import 'package:mason/mason.dart';
 Future<void> run(HookContext context) async {
   await cleanupFiles(context);
 
-  await installDependencies(context);
   await updatePubspec(context);
+  await installDependencies(context);
 
   final name = context.vars['name']?.toString().snakeCase;
   if (name == null) {
@@ -41,25 +41,47 @@ Future<void> cleanupFiles(HookContext context) async {
 }
 
 installDependencies(HookContext context) async {
-  final progress = context.logger.progress('Installing dependencies ...');
+  final vars = <String>['get'];
+
+  for (final v in context.vars.entries) {
+    if (v.value == true && v.key != 'firebase') {
+      vars.add(v.key.toString());
+    }
+  }
+
+  context.logger.info('Installing :${vars.join(', ')}');
   final name = context.vars['name']?.toString().snakeCase;
   if (name == null) {
     throw Exception('Invalid name : ${name}');
   }
 
-  final packages = 'get '
-      '${context.vars['get_storage'] == true ? 'get_storage' : ''} '
-      '${context.vars['firebase'] == true ? 'firebase_core' : ''} '
-      '${context.vars['firebase_analytics'] == true ? 'firebase_analytics' : ''} '
-      '${context.vars['firebase_crashlytics'] == true ? 'firebase_crashlytics' : ''} '
-      '${context.vars['firebase_auth'] == true ? 'firebase_auth' : ''} ';
+  final progress = context.logger.progress('Installing dependencies ...');
 
-  await Process.run(
+  final result = await Process.run(
     'flutter',
-    ['pub', 'add', packages.trim()],
+    ['pub', 'add', '${vars.join(' ').trim()}'],
     workingDirectory: name,
     runInShell: true,
   );
+
+  final res = await Future.wait(
+    vars.map(
+      (p) => Process.run(
+        'flutter',
+        ['pub', 'add', p],
+        workingDirectory: name,
+        runInShell: true,
+      ),
+    ),
+  );
+
+  final errs = res.where((r) => r.exitCode != 0);
+
+  if (errs.isNotEmpty) {
+    final error = await errs.first.stderr.toString();
+    progress.fail(error);
+  }
+
   progress.complete('Installed dependencies');
 }
 

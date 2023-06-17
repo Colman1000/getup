@@ -5,6 +5,6 @@ class Routes {
    // all Get Pages will go here
   ];
 
-  // static String get initialRoute => all.first;
+  static String get initialRoute => '/';
 
 }

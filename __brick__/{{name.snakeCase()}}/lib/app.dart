@@ -36,7 +36,7 @@ class App extends StatelessWidget {
         )
 {{/firebase_analytics}}
       ],
-      scaffoldMessengerKey: Constants.scaffoldMsgKey,
+      scaffoldMessengerKey: Constants.scaffoldMessengerKey,
     );
   }
 }
