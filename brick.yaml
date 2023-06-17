@@ -10,22 +10,16 @@ vars:
     type: string
     description: App name. It is said, a cool app name doubles productivity
     default: flutter_app
-    prompt: What is your cool app's name 🔥?
+    prompt: "What is your cool app's name 🔥?"
 
   description:
     type: string
     description: A brief description of your app, Description appears in Readme and pubspec.yaml
-    default: Flutter ❤️ GetX
-    prompt: Write a brief description for the app 💪🏼?
+    default: "Flutter ❤️ GetX"
+    prompt: "Write a brief description for the app 💪🏼?"
 
   org:
     type: string
     description: Organization name
     default: com.example
-    prompt: What is the organization's name 🏛️?
-
-  firebase:
-    type: boolean
-    description: Whether to include firebase in the project
-    default: true
-    prompt: Add Firebase ☄️?
+    prompt: "What is the organization's name 🏛️?"
