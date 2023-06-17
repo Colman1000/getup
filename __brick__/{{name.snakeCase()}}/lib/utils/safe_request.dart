@@ -1,7 +1,9 @@
 import 'dart:io';
 
+{{#firebase}}
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+{{#firebase}}
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:{{name.snakeCase()}}/models/general/app_exeption.dart';
@@ -23,7 +25,7 @@ class SafeRequest<T> {
       FirebaseCrashlytics.instance.recordFlutterError(
         FlutterErrorDetails(
           exception: e,
-          library: 'QwikServe ${tag == null ? '' : ': $tag'}',
+          library: '{{name}} ${tag == null ? '' : ': $tag'}',
           stack: StackTrace.current,
         ),
       );
@@ -42,17 +44,17 @@ class SafeRequest<T> {
     } on FormatException {
       const err = AppException('Bad response format 👎');
       errorHandler(err);
-    } /*on FirebaseFunctionsException catch (e) {
-      final err = AppException.fromFirebaseException(e);
-      errorHandler(err);
-    }*/
+    }
+    {{#firebase}}
     on FirebaseAuthException catch (e) {
       final err = AppException.fromAuthException(e);
       errorHandler(err);
     } on PlatformException catch (e) {
       final err = AppException.fromPlatformException(e);
       errorHandler(err);
-    } on AppException catch (e) {
+    }
+    {{/firebase}}
+    on AppException catch (e) {
       errorHandler(e);
     } catch (e) {
       errorHandler(const AppException());

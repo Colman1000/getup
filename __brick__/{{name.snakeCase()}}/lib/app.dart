@@ -1,4 +1,6 @@
+{{#firebase}}
 import 'package:firebase_analytics/firebase_analytics.dart';
+{{/firebase}}
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:{{name.snakeCase()}}/app_bindings.dart';

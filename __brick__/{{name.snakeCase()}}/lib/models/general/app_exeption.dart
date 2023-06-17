@@ -1,5 +1,7 @@
 import 'package:flutter/services.dart';
+{{#firebase}}
 import 'package:firebase_auth/firebase_auth.dart';
+{{/firebase}}
 
 class AppException implements Exception {
   @pragma('vm:entry-point')
