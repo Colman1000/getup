@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:qserve/config/assets.dart';
-import 'package:qserve/screens/intro/widgets/page_indicator.intro.dart';
-import 'package:qserve/widgets/app_button.dart';
-import 'package:qserve/widgets/app_scaffold.dart';
-import 'package:qserve/widgets/app_text.dart';
+import 'package:{{name.snakeCase()}}/config/assets.dart';
+import 'package:{{name.snakeCase()}}/screens/intro/widgets/page_indicator.intro.dart';
+import 'package:{{name.snakeCase()}}/widgets/app_button.dart';
+import 'package:{{name.snakeCase()}}/widgets/app_scaffold.dart';
+import 'package:{{name.snakeCase()}}/widgets/app_text.dart';
 
 import 'intro.controller.dart';
 

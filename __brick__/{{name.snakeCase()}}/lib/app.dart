@@ -1,11 +1,11 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:{{name}}/app_bindings.dart';
-import 'package:{{name}}/config/colors.dart';
-import 'package:{{name}}/config/constants.dart';
-import 'package:{{name}}/config/routes.dart';
-import 'package:{{name}}/config/theme.dart';
+import 'package:{{name.snakeCase()}}/app_bindings.dart';
+import 'package:{{name.snakeCase()}}/config/colors.dart';
+import 'package:{{name.snakeCase()}}/config/constants.dart';
+import 'package:{{name.snakeCase()}}/config/routes.dart';
+import 'package:{{name.snakeCase()}}/config/theme.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -13,7 +13,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: {{name}},
+      title: {{name.titleCase()}},
       popGesture: true,
       theme: AppTheme.lightTheme,
       // darkTheme: AppTheme.darkTheme,

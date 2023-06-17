@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:{{name}}/models/general/app_exeption.dart';
+import 'package:{{name.snakeCase()}}/models/general/app_exeption.dart';
 
 /// A helper class that wraps possible error codeblocks with a simple API to
 /// handle errors
