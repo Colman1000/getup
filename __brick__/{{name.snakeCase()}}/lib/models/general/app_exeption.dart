@@ -7,6 +7,7 @@ class AppException implements Exception {
   @pragma('vm:entry-point')
   const AppException([this.message = defaultMessage]);
 
+  {{#firebase}}
   factory AppException.fromAuthException(FirebaseAuthException e) {
     String msg = defaultMessage;
 
@@ -108,6 +109,7 @@ class AppException implements Exception {
     return AppException(msg);
   }
 
+  {{/firebase}}
   final String message;
 
   @override

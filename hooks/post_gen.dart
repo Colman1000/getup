@@ -28,7 +28,7 @@ installDependencies(HookContext context) async {
   final progress = context.logger.progress('Installing dependencies ...');
   await Process.run(
     'flutter',
-    ['pub', 'add', 'get get_storage'],
+    ['pub', 'add', 'get ${firebase? '' : ''}'],
     workingDirectory: './{{name}}',
     runInShell: true,
   );

@@ -26,5 +26,5 @@ firebase_analytics
 firebase_crashlytics
 firebase_auth
 
-get_storage
+
 package_info_plus
