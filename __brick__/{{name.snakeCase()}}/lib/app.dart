@@ -1,6 +1,6 @@
-{{#firebase}}
+{{#firebase_analytics}}
 import 'package:firebase_analytics/firebase_analytics.dart';
-{{/firebase}}
+{{/firebase_analytics}}
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:{{name.snakeCase()}}/app_bindings.dart';
@@ -26,6 +26,7 @@ class App extends StatelessWidget {
       color: AppColors.primary(context),
       enableLog: true,
       navigatorObservers: [
+{{#firebase_analytics}}
         FirebaseAnalyticsObserver(
           analytics: FirebaseAnalytics.instance,
           nameExtractor: (s) {
@@ -33,6 +34,7 @@ class App extends StatelessWidget {
             return name.startsWith('/') ? name.substring(1) : name;
           },
         )
+{{/firebase_analytics}}
       ],
       scaffoldMessengerKey: Constants.scaffoldMsgKey,
     );

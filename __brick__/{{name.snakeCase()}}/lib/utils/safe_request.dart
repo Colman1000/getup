@@ -1,10 +1,12 @@
 import 'dart:io';
 
-{{#firebase}}
+{{#firebase_auth}}
 import 'package:firebase_auth/firebase_auth.dart';
+{{/firebase_auth}}
+{{#firebase_crashlytics}}
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-{{#firebase}}
-import 'package:flutter/cupertino.dart';
+{{/firebase_crashlytics}}
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:{{name.snakeCase()}}/models/general/app_exeption.dart';
 
@@ -22,6 +24,7 @@ class SafeRequest<T> {
     final localErrorHandler = onError ?? (e) => debugPrint(e.message);
     errorHandler(AppException e) {
       // Report Error to crashlytics
+      {{#firebase_crashlytics}}
       FirebaseCrashlytics.instance.recordFlutterError(
         FlutterErrorDetails(
           exception: e,
@@ -29,6 +32,10 @@ class SafeRequest<T> {
           stack: StackTrace.current,
         ),
       );
+      {{/firebase_crashlytics}}
+      {{^firebase_crashlytics}}
+      /// Log error remote tracker like Crashlytics or Sentry
+      {{/firebase_crashlytics}}
       localErrorHandler(e);
     }
 
@@ -45,16 +52,16 @@ class SafeRequest<T> {
       const err = AppException('Bad response format 👎');
       errorHandler(err);
     }
-    {{#firebase}}
+    {{#firebase_auth}}
     on FirebaseAuthException catch (e) {
       final err = AppException.fromAuthException(e);
       errorHandler(err);
-    } on PlatformException catch (e) {
+    }
+    {{/firebase_auth}}
+    on PlatformException catch (e) {
       final err = AppException.fromPlatformException(e);
       errorHandler(err);
-    }
-    {{/firebase}}
-    on AppException catch (e) {
+    } on AppException catch (e) {
       errorHandler(e);
     } catch (e) {
       errorHandler(const AppException());

@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:{{name.snakeCase()}}/screens/intro/intro.controller.dart';
-import 'package:{{name.snakeCase()}}/screens/intro/intro.view.dart';
+import 'intro.controller.dart';
+import 'intro.view.dart';
 
 final intro = GetPage(
   name: IntroView.name,

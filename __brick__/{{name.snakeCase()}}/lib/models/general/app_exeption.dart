@@ -1,13 +1,13 @@
 import 'package:flutter/services.dart';
-{{#firebase}}
+{{#firebase_auth}}
 import 'package:firebase_auth/firebase_auth.dart';
-{{/firebase}}
+{{/firebase_auth}}
 
 class AppException implements Exception {
   @pragma('vm:entry-point')
   const AppException([this.message = defaultMessage]);
 
-  {{#firebase}}
+  {{#firebase_auth}}
   factory AppException.fromAuthException(FirebaseAuthException e) {
     String msg = defaultMessage;
 
@@ -76,40 +76,7 @@ class AppException implements Exception {
     return AppException(msg);
   }
 
-  factory AppException.fromFirebaseException(FirebaseException e) {
-    String msg = defaultMessage;
-
-    switch (e.code) {
-      case 'storage/canceled':
-        msg = 'Upload cancelled';
-        break;
-
-      case 'storage/cannot-slice-blob':
-        msg = 'File not found';
-        break;
-
-      case 'storage/server-file-wrong-size':
-        msg = 'Try again';
-        break;
-
-      case 'storage/quota-exceeded':
-        msg = 'Try again later';
-        break;
-
-      case 'storage/unauthorized':
-      case 'storage/unauthenticated':
-        msg = 'User unauthenticated';
-        break;
-
-      default:
-        msg = e.message ?? defaultMessage;
-        break;
-    }
-
-    return AppException(msg);
-  }
-
-  {{/firebase}}
+  {{/firebase_auth}}
   final String message;
 
   @override
