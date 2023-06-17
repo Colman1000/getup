@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Collection of constants for {{name}}
+/// Collection of constants for {{name.pascalCase()}}
 class Constants {
   const Constants._(); // this basically makes it so you can't instantiate this class
 

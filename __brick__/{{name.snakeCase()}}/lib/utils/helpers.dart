@@ -31,5 +31,3 @@ class Format {
     return '$_currency$number';
   }
 }
-
-enum SnackBarType { error, warn, success, log }

@@ -75,7 +75,6 @@ class AppException implements Exception {
 
     return AppException(msg);
   }
-
   {{/firebase_auth}}
   final String message;
 

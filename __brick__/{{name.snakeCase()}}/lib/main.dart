@@ -10,16 +10,9 @@ import 'package:{{name.snakeCase()}}/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  {{#get_storage}}
-  await GetStorage.init();
-  {{/get_storage}}
-
-  {{#firebase}}
-  await Firebase.initializeApp(
+  {{#get_storage}} await GetStorage.init(); {{/get_storage}}
+  {{#firebase}} await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-  );
-  {{/firebase}}
-
+  );{{/firebase}}
   runApp(const App());
 }

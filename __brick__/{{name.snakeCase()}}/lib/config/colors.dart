@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-/// Collection of colors for {{name}}
+/// Collection of colors for {{name.pascalCase()}}
 class AppColors {
   const AppColors._(); // this basically makes it so you can't instantiate this class
 

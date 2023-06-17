@@ -15,7 +15,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: {{name.titleCase()}},
+      title: "{{name.titleCase()}}",
       popGesture: true,
       theme: AppTheme.lightTheme,
       // darkTheme: AppTheme.darkTheme,
